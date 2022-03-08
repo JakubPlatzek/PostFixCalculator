@@ -1,3 +1,5 @@
+import java.util.EmptyStackException;
+
 public class CalculatorVisitor implements Calculator, Visitor{
     private final LinkedStack<Token> tokenStack;
 
@@ -31,13 +33,17 @@ public class CalculatorVisitor implements Calculator, Visitor{
     }
 
     @Override
-    public int getResult() {
-        if (tokenStack.isEmpty()) return Integer.MIN_VALUE;
-        Token token = tokenStack.pop();
-        if (token instanceof Operand op) {
-            return op.getValue();
-        } else {
-            return Integer.MIN_VALUE;
+    public int getResult() throws MalformedException{
+        try{
+            Token token = tokenStack.pop();
+            if (token instanceof Operand op) {
+                return op.getValue();
+            } else {
+                return Integer.MIN_VALUE;
+            }
+        }
+        catch(EmptyStackException e){
+            throw new MalformedException();
         }
     }
 

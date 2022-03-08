@@ -22,15 +22,14 @@ public class LinkedList<T> implements List<T>{
     }
 
     @Override
-    public T removeFirst() throws Exception {
-        if (isEmpty()) {
-            throw  new Exception("EmptyListException");
+    public T removeFirst() throws EmptyListException
+    {
+        if(isEmpty()){
+            throw new EmptyListException();
         }
-        else {
             Node<T> temp = head;
             head = head.getNext();
             size--;
             return temp.getData();
         }
-    }
 }
